@@ -46,6 +46,33 @@ export default function Locations() {
     setEditingId(null);
   }
 
+  const [locating, setLocating] = useState(false);
+  const [locateError, setLocateError] = useState('');
+
+  function fillCurrentPosition() {
+    if (!navigator.geolocation) {
+      setLocateError('Locatie is niet beschikbaar in deze browser.');
+      return;
+    }
+    setLocating(true);
+    setLocateError('');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setForm((f) => ({
+          ...f,
+          lat: pos.coords.latitude.toFixed(5),
+          lon: pos.coords.longitude.toFixed(5),
+        }));
+        setLocating(false);
+      },
+      () => {
+        setLocateError('Kon je locatie niet bepalen. Geef de app toegang tot je locatie.');
+        setLocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 15000 },
+    );
+  }
+
   function startEdit(loc: Location) {
     setEditingId(loc.id);
     setForm({ name: loc.name, lat: String(loc.lat), lon: String(loc.lon), radiusM: String(loc.radiusM) });
@@ -107,6 +134,10 @@ export default function Locations() {
               />
             </label>
           </div>
+          <button type="button" className="btn btn--secondary" onClick={fillCurrentPosition} disabled={locating}>
+            {locating ? 'Locatie bepalen…' : '📍 Gebruik huidige locatie'}
+          </button>
+          {locateError && <p className="helper">{locateError}</p>}
           <label>
             Straal (meter)
             <input
