@@ -1,0 +1,5 @@
+/* Pagina-specifieke uitzonderingen; de meeste stijl staat in index.css. */
+
+.app--plain .app__main {
+  padding-top: var(--sp-4);
+}

@@ -1,0 +1,505 @@
+/* =========================================================================
+   Rittenregistratie — index.css
+   Design: rustig, strak, mobile-first (iPhone). Eén accentkleur, veel lucht.
+   Font: Inter (zie index.html <head>).
+   ========================================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  --bg:           #eef2f0;   /* app-achtergrond, zacht mosgroen-grijs */
+  --surface:      #ffffff;   /* kaarten, invoervelden */
+  --surface-2:    #f4f7f5;   /* subtiele vulling, hover */
+  --ink:          #1e2b25;   /* primaire tekst */
+  --ink-2:        #4b5b53;   /* secundaire tekst */
+  --muted:        #7c8a83;   /* labels, metadata */
+  --line:         #dde5e1;   /* hairline */
+  --line-strong:  #c7d3cd;
+
+  --accent:       #2e5a4a;   /* primaire actie, donkergroen */
+  --accent-press: #234636;
+  --accent-soft:  #e3ede8;
+  --accent-ink:   #ffffff;
+
+  --zakelijk:      #2e5a4a;
+  --zakelijk-soft: #e3ede8;
+  --prive:         #8a5a2e;
+  --prive-soft:    #f3e9dd;
+
+  --warn:         #d98324;
+  --warn-soft:    #faecd9;
+  --danger:       #b23b3b;
+  --danger-soft:  #f7e3e3;
+  --ok:           #2e7d55;
+  --ok-soft:      #e2f0e8;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-display: 1.5rem;
+  --fs-h1: 1.25rem;
+  --fs-h2: 1.0625rem;
+  --fs-body: 0.9375rem;
+  --fs-sm: 0.8125rem;
+  --fs-xs: 0.6875rem;
+  --lh-body: 1.5;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+
+  --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-pill: 999px;
+
+  --sh-1: 0 1px 2px rgba(30, 43, 37, 0.06);
+  --sh-2: 0 4px 12px rgba(30, 43, 37, 0.08);
+
+  --tap: 44px;
+  --dur: 140ms;
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nav-height: 62px;
+}
+
+/* ---------- 2. Reset ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+h1, h2, h3, p, ul, figure { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+input, select, textarea { font: inherit; color: inherit; }
+
+h1 { font-size: var(--fs-display); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: var(--fs-h1); font-weight: 600; }
+h3 { font-size: var(--fs-h2); font-weight: 600; }
+
+.helper { color: var(--muted); font-size: var(--fs-sm); }
+
+/* ---------- 3. Layout ---------- */
+#root { min-height: 100%; }
+
+.app {
+  min-height: 100vh;
+  padding-top: var(--safe-top);
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--sp-4));
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.app__header {
+  padding: var(--sp-5) var(--sp-4) var(--sp-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.app__main {
+  padding: 0 var(--sp-4) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.section__title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+
+/* ---------- 4. Kaarten ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  box-shadow: var(--sh-1);
+}
+
+.card--tight { padding: var(--sp-3); }
+
+/* ---------- 5. Knoppen ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--tap);
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn:hover:not(:disabled) { background: var(--accent-press); }
+
+.btn--secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn--secondary:hover:not(:disabled) { background: var(--surface-2); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--accent);
+  border-color: transparent;
+  padding: 0 var(--sp-2);
+}
+
+.btn--danger { background: var(--danger); }
+.btn--danger:hover:not(:disabled) { background: #8f2f2f; }
+
+.btn--block { width: 100%; }
+.btn--sm { min-height: 34px; padding: 0 var(--sp-3); font-size: var(--fs-sm); }
+
+/* ---------- 6. Formulieren ---------- */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.field {
+  min-height: var(--tap);
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--fs-body);
+}
+.field:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+textarea.field { min-height: 72px; padding: var(--sp-2) var(--sp-3); resize: vertical; }
+
+.form-grid {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+/* ---------- 7. Chips & badges ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: var(--surface-2);
+  color: var(--ink-2);
+}
+.chip[aria-pressed='true'] { background: var(--accent); color: var(--accent-ink); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.badge--zakelijk { background: var(--zakelijk-soft); color: var(--zakelijk); }
+.badge--prive { background: var(--prive-soft); color: var(--prive); }
+.badge--warn { background: var(--warn-soft); color: var(--warn); }
+.badge--ok { background: var(--ok-soft); color: var(--ok); }
+.badge--danger { background: var(--danger-soft); color: var(--danger); }
+
+/* Toggle: zakelijk/privé met één tik */
+.type-toggle {
+  display: inline-flex;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+}
+.type-toggle button {
+  border: none;
+  background: var(--surface);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink-2);
+  min-height: 34px;
+}
+.type-toggle button[aria-pressed='true'].type-toggle__zakelijk {
+  background: var(--zakelijk); color: #fff;
+}
+.type-toggle button[aria-pressed='true'].type-toggle__prive {
+  background: var(--prive); color: #fff;
+}
+
+/* ---------- 8. Voortgangsbalk (privé-km) ---------- */
+.progress {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.progress__bar {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--ok);
+  transition: width var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.progress__bar--warn { background: var(--warn); }
+.progress__bar--danger { background: var(--danger); }
+
+/* ---------- 9. Statustegels dashboard ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+.stat-tile {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.stat-tile__value { font-size: 1.5rem; font-weight: 700; }
+.stat-tile__label { font-size: var(--fs-sm); color: var(--muted); }
+
+/* ---------- 10. Onderste navigatie ---------- */
+.bottom-nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: calc(var(--nav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  display: flex;
+  z-index: 10;
+}
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+.bottom-nav__item.active { color: var(--accent); }
+.bottom-nav__icon { font-size: 1.25rem; line-height: 1; }
+
+/* ---------- 11. Ritkaart ---------- */
+.trip-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-3) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.trip-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+}
+.trip-card__route {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+.trip-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  color: var(--muted);
+  font-size: var(--fs-xs);
+}
+
+.month-heading {
+  padding: var(--sp-2) 0 0;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 12. Overig ---------- */
+.empty-state {
+  padding: var(--sp-8) var(--sp-4);
+  text-align: center;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.list-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.list-links a, .list-links button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tap);
+  padding: 0 var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+}
+
+.warning-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+}
+.warning-list li {
+  background: var(--warn-soft);
+  color: #6b4a10;
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-3);
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: var(--sp-2) 0;
+}
+
+.help-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.help-block ol, .help-block ul {
+  padding-left: var(--sp-5);
+  list-style: decimal;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.help-block ul { list-style: disc; }
+
+/* ---------- 13. Sheet (bottom sheet / modal) ---------- */
+.sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 26, 0.4);
+  display: flex;
+  align-items: flex-end;
+  z-index: 20;
+}
+.sheet {
+  background: var(--surface);
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  padding: var(--sp-5) var(--sp-4) calc(var(--sp-8) + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.sheet__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sheet__close {
+  border: none;
+  background: var(--surface-2);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---------- 14. Filters ---------- */
+.filter-row {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.month-nav__label { font-weight: 700; }
+.icon-btn {
+  min-width: var(--tap);
+  min-height: var(--tap);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  font-size: 1.1rem;
+}
+
+.merge-suggestion {
+  background: var(--accent-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+}
